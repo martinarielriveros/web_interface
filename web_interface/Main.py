@@ -23,15 +23,19 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
+st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
+
 # Load environment variables from the .env file
+
 load_dotenv()
+
 # Access the secret key using the environment variable
+
 SLACK_API_TOKEN = os.getenv('SLACK_API_TOKEN')
 SLACK_API_TOKEN_BOT = os.getenv('SLACK_API_TOKEN_BOT')
 SLACK_CHANNEL_ID = os.getenv('SLACK_CHANNEL_ID')
 
 def send_slack_notification(client_ip):
-
 
     # Get the hostname of the machine
     host_name = socket.gethostname()
@@ -53,7 +57,6 @@ def send_slack_notification(client_ip):
 
 def KNN_model_predict(params, slider_count):
     
-
     key_file_path = './GCP_service_account/key_storage_ML.json'
     bucket_name= 'data_clear_ml'
     file_name = 'modelo1_knn.pkl'
@@ -84,7 +87,7 @@ def KNN_model_predict(params, slider_count):
 def get_business_locations(indexes):
 
 
-            # Also, in account service, set the following permissions
+            # In account service, set the following permissions:
             # BigQuery Data Viewer
             # BigQuery User
 
@@ -120,14 +123,15 @@ def get_business_locations(indexes):
             return results.to_dataframe()
 
 def create_blank_map():
-    # center on , add marker
+
+    # center on some location near center US, add marker
     m = folium.Map(location=[38, -97], zoom_start=6)
     # call to render Folium map in Streamlit
     st_data = st_folium(m, width=400)
 
     return st_data
 
-st.markdown('<style>' + open('./style.css').read() + '</style>', unsafe_allow_html=True)
+
 
 
 with st.sidebar:
@@ -146,7 +150,7 @@ if tabs=="Home":
             '''
             st.markdown(intro)
             
-            ## Nuestra información
+            # Our info
             
             personas = [
                 {
@@ -187,7 +191,7 @@ if tabs=="Home":
                 }
             ]
 
-            # Mostrar todas las tarjetas en la misma fila
+            # Show all cards in the sama row
             column1, column2, column3, column4,column5 = st.columns(5)
             
 
@@ -237,6 +241,7 @@ elif tabs=="ML":
                     toggle_american = st.toggle('Comida yankee')      
             
             with col3:
+                
                 st.header('Hace doble click en el mapa')
                 default_lat, default_lon = (38, -97)
 
